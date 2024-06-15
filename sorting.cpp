@@ -102,3 +102,26 @@ void Merge_sort(vi<ll>& v, int l, int r) {
     Merge_sort(v, mid+1, r);
     combine(v, l, mid, r);
 }
+// Quick pivot is the first element
+int partition(vi<ll>& v, int l, int r) {
+    int pivot = v[l];
+    int pivotidx = l;
+    int cnt=0;
+    for(int i=l+1; i <= r; i++) cnt += (v[i] <= pivot);
+    swap(v[l], v[l+cnt]);
+    pivotidx = l+cnt;
+    int i=l, j=r;
+    while(i < pivotidx && j > pivotidx) {
+        while(i < pivotidx && v[i] <= pivot)i++;
+        while(j > pivotidx && v[j] > pivot) j--;
+        if(v[i] > pivot && v[j] <= pivot)
+            swap(v[i], v[j]);
+    }
+    return pivotidx;
+}
+void Quick_sort(vi<ll>& v, int l, int r) {
+    if(l >= r) return;
+    int mid = partition(v,l,r);
+    Quick_sort(v, l, mid-1);
+    Quick_sort(v, mid+1, r);
+}
