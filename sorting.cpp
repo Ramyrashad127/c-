@@ -32,7 +32,7 @@ void Insertion_sort(vi<ll>&v,int n) {
         }
     }
 }
-// no negative numbers
+// count (no negative numbers)
 void Count_sort(vi<ll>&v,int n) {
    ll mx = v[0];
     // get the max element
@@ -75,4 +75,30 @@ void Radix_sort(vi<ll>& v, int n) {
     for(ll pos = 1;pos<1e18; pos*=10) {
         count(v,n,pos);
     }
+}
+// merge
+void combine(vi<ll>& v,int l, int mid, int r) {
+    vi<ll>left,right;
+    for(int i = l; i <= mid; i++) left.push_back(v[i]);
+    for(int i = mid + 1; i <= r; i++) right.push_back(v[i]);
+    left.push_back(LLONG_MAX);
+    right.push_back(LLONG_MAX);
+    int ptr1 = 0, ptr2 = 0;
+    for(int i = l; i <= r; i++) {
+        if(left[ptr1] <= right[ptr2]) {
+            v[i] = left[ptr1];
+            ptr1++;
+        }
+        else {
+            v[i] = right[ptr2];
+            ptr2++;
+        }
+    }
+}
+void Merge_sort(vi<ll>& v, int l, int r) {
+    if(l >= r)return;
+    int mid = (l+r)/2;
+    Merge_sort(v, l, mid);
+    Merge_sort(v, mid+1, r);
+    combine(v, l, mid, r);
 }
