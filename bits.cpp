@@ -61,18 +61,32 @@ bool check_power_of_two(ll x)
         return 0;
     return !(x & (x-1));
 }
+string to_binary(ll n)
+{
+    string t;
+    while(n>0)
+    {
+        t.push_back(char('0' + n%2));
+        n/=2;
+    }
+    //reverse(t.begin(),t.end());
+    return t;
+}
+int MSB(int x)
+{
+    int ans = 0;
+    while(x>0)
+    {
+        x = x>>1;
+        ans++;
+    }
+    return ans-1;
+}
 void solve() {
-  int a,b;
-  cin>>a>>b;
-  ll x=0;
-  for(int i=0;i<32;i++)
-  {
-      if(checkbit(a,i) && checkbit(b,i))
-      {
-          x += 1<<i;
-      }
-  }
-  cout<<(a^x) + (b^x)<<"\n";
+    int n;
+    cin>>n;
+    vi<int>mp,used,v();
+    for()
 }
 int main() {
     IOS
