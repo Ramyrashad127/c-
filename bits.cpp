@@ -1,98 +1,98 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 #define ll long long
-#define vi vector
+#define ld long double
+#define endl '\n'
+//#define sort(X) sort(X.begin(),X.end());
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define vi vector<ll>
+#define vii vector<vi>
+#define vc vector<char>
+#define vcc vector<vc>
+#define mi map<ll,int>
+#define mc map<char,int>
+#define cinv(v,n) for(int i = 0;i<n;i++)cin>>v[i];
 using namespace std;
-using namespace __gnu_pbds;
-#define ordered_set tree<int , null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-#define IOS ios_base::sync_with_stdio(0); cin.tie(0);
-// convert decimal to binary O(log2(n))
-string to_binary(ll n)
+void letsMakeItFaster()
 {
-    string t;
-    while(n>0)
-    {
-        t.push_back(char('0' + n%2));
-        n/=2;
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+}
+string to_binary(int n){
+    string s;
+    while (n){
+        int rem = n % 2;
+        s.push_back(char(rem + '0'));
+        n /= 2;
     }
-    //reverse(t.begin(),t.end());
-    return t;
+    reverse(s.begin(), s.end());
+    return s;
 }
-// turn on Ith bit O(1) 0 <= i < 64
-ll turn_on(ll n, int x)
-{
-    return (n | (1 << (x)));
+// multiply x by 2 i times
+int shift_left(int x, int i){
+    return x << i;
 }
-// turn off Ith bit 0 <= i < 64
-ll turn_off (ll n,int x)
-{
-    return (n & (~(1<<x)));
+// divide x by 2 i times
+int shift_right(int x, int i){
+    return x >> i;
 }
-// check state of Ith bit
-int checkbit(ll n, int x)
-{
-    return (1 & (n>>x));
+// set ith bit
+int light(int x, int i){
+    return x | (1 << i);
 }
-ll flipbit(ll n, int x)
-{
-    return (n ^ (1<<x));
+// unset ith bit
+int dark(int x, int i){
+    return x & (~(1 << i));
 }
-// least signeficant bit LSB return the value in decimal
-int LSB(int n)
-{
-    return n & (-n);
+// check the existence of the bit
+bool checkBit(int x, int i){
+    return x & (1 << i);
 }
-// most signficant bit 0 base
-int MSB(int x)
-{
-    int ans = 0;
-    while(x>0)
-    {
-        x = x>>1;
-        ans++;
+// Flipping the ith bit
+int flipBit(int x, int i){
+    return x ^ (1 << i);
+}
+// get the least significant bit
+int LSB(int x){
+    return x & (-x);
+}
+// get the most significant bit
+int MSB(int x){
+    int msb = 0;
+    while (x){
+        x >>= 1;
+        msb++;
     }
-    return ans-1;
+    return msb - 1;
 }
-// check if the number is power of two or not
-bool check_power_of_two(ll x)
-{
-    if(x == 0)
-        return 0;
-    return !(x & (x-1));
+bool checkPowerOfTwo(int x){
+    return !(x & (x - 1));
 }
-string to_binary(ll n)
+void subseq(int n , vector<ll>&v)
 {
-    string t;
-    while(n>0)
+    int res = (1<<n)-1;
+    for(int i = 0;i<=res;i++)
     {
-        t.push_back(char('0' + n%2));
-        n/=2;
+        for(int j = 0;j<n;j++)
+        {
+            if(checkBit(i,j)==1)
+            {
+                cout<<v[j]<<" ";
+            }
+        }
+        cout<<endl<<" ";
     }
-    //reverse(t.begin(),t.end());
-    return t;
 }
-int MSB(int x)
-{
-    int ans = 0;
-    while(x>0)
-    {
-        x = x>>1;
-        ans++;
-    }
-    return ans-1;
-}
-void solve() {
-    int n;
-    cin>>n;
-    vi<int>mp,used,v();
-    for()
+void solve(int test) {
+
 }
 int main() {
-    IOS
-    int t=1;
-    cin>>t;
-    while(t--)
-        solve();
-    return 0;
+    letsMakeItFaster();
+    int test = 1;
+    cin >> test;
+    for(int i = 1;i<=test;i++)
+    {
+        solve(i);
+	cout<<'\n';
+    }
+
 }
