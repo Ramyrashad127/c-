@@ -16,3 +16,33 @@ void dfs(int node){
             dfs(neg);
     }
 }
+// dsu
+ll sz[200005], par[200005];
+int component = 0;
+ll find(int node) {
+    if(par[node] == node)
+        return node;
+    else {
+        ll res = find(par[node]);
+        par[node] = res;
+        return res;
+    }
+}
+ll join(int u, int v) {
+    u = find(u);
+    v = find(v);
+    if(u == v)
+        return false;
+    if(sz[u] < sz[v])
+        swap(u,v);
+    sz[u] = sz[u] + sz[v];
+    par[v] = u;
+    return true;
+}
+// void move(int u, int v) {
+//     int x = find(u);
+//     v = find(v);
+//     sz[x]--, sz[v]++;
+//     su[x]-=u, su[v]+=u;
+//     par[u] = v;
+// }
