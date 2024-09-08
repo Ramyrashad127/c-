@@ -46,3 +46,36 @@ ll join(int u, int v) {
 //     su[x]-=u, su[v]+=u;
 //     par[u] = v;
 // }
+
+bool bellman(int n, int m, vi<edge> &edges, int src) {
+    vi<ll>d(n+5, -1e8);
+    d[src] = 1.0;
+    for(int i=1;i<=n-1;i++) {
+        for(int j=1;j<=m;j++) {
+            ll u = edges[j].u, v = edges[j].v;
+            ll w = edges[j].w;
+            if(d[v] > d[u] + w) {
+                d[v] = d[u] + w;
+            }
+        }
+    }
+    // check cyc
+    for(int i=1;i<=m;i++) {
+        ll u = edges[i].u, v = edges[i].v;
+        long double w = edges[i].w;
+        if(d[v] > d[u] + w) {
+            return true;
+        }
+    }
+    return false;
+}
+void floyed(int n, vi<vi<ll>>&d) {
+    for(int k=1; k<=n;k++) {
+        for(int i=1;i<=n;i++) {
+            for(int j=1;j<=n;j++) {
+                if(d[i][j] > d[i][k] + d[k][j])
+                    d[i][j] = d[i][k] + d[k][j];
+            }
+        }
+    }
+}
