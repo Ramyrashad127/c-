@@ -17,28 +17,31 @@ void dfs(int node){
     }
 }
 // dsu
-ll sz[200005], par[200005];
-int component = 0;
-ll find(int node) {
-    if(par[node] == node)
-        return node;
-    else {
-        ll res = find(par[node]);
-        par[node] = res;
-        return res;
+struct DSU {
+    vi<ll> par, sz;
+    void init(int n) {
+        par.assign(2*n,0);
+        sz.assign(2*n,0);
     }
-}
-ll join(int u, int v) {
-    u = find(u);
-    v = find(v);
-    if(u == v)
-        return false;
-    if(sz[u] < sz[v])
-        swap(u,v);
-    sz[u] = sz[u] + sz[v];
-    par[v] = u;
-    return true;
-}
+    int get(int node) {
+        if (node == par[node])
+            return node;
+        int p = get(par[node]);
+        par[node] = p;
+        return p;
+    }
+ 
+    void Union(int node1, int node2) {
+        int p1 = get(node1);
+        int p2 = get(node2);
+        if (p1 == p2)
+            return;
+        if (sz[p1] > sz[p2])
+            swap(p1, p2);
+        sz[p2] += sz[p1];
+        par[p1] = p2;
+    }
+};
 // void move(int u, int v) {
 //     int x = find(u);
 //     v = find(v);

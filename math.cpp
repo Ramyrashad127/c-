@@ -28,7 +28,7 @@ vi<bool> sieve(ll n)
     v[0] = v[1] = 0;
     for(ll i = 2; i * i <= n; i++)
     {
-        if (isprime(i))
+        if (v[i])
         {
             for (ll j = i * i; j <= n; j += i)
                 v[j] = 0;
