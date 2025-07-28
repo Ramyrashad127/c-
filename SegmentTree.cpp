@@ -3,13 +3,14 @@
 #define ll long long
 #define vi vector
 using namespace std;
+// basic segment
 struct segtree {
     int size = 1;
     vi<ll>value;
     void init(int n) {
         while (size < n)
             size<<=1;
-        value.assign(2*size,    0);
+        value.assign(2*size, 0);
     }
     void merge(int node) {
         value[node] = value[2*node+1] + value[2*node+2];
@@ -64,5 +65,69 @@ struct segtree {
     void set(int i, ll val)
     {
         set(i,val,0,0,size-1);
+    }
+};
+// lazy segment (update range)
+struct segtree {
+    vi<ll> values;
+    int sz = 1;
+    void init(int n) {
+        while (sz < n)
+            sz*=2;
+        values.assign(2*sz, -1);
+    }
+    void build(vi<ll> &v, int node, int l, int r) {
+        if (l==r) {
+            if (l < v.size()) {
+                values[node] = v[l];
+            }
+            return;
+        }
+        int m = (l+r)/2;
+        build(v, 2*node+1, l,m);
+        build(v, 2*node+2, m+1,r);
+    }
+    void build(vi<ll> &v) {
+        init(v.size());
+        build(v, 0, 0, sz-1);
+    }
+    void apply(int node, ll v) {
+        values[node] = v;
+    }
+    void propagate(int node, int l , int r) {
+        if (l == r) return;
+        if (values[node] != -1) {
+            apply(2*node+1, values[node]);
+            apply(2*node+2, values[node]);
+            values[node] = -1;
+        }
+    }
+    void update(int lq, int rq, ll v, int node, int l, int r) {
+        propagate(node,l,r);
+        if (l > rq || r < lq) return;
+        if (l >= lq && r <= rq) {
+            values[node] = v;
+            return;
+        }
+        int m = (l+r)/2;
+        update(lq,rq,v, 2*node+1, l,m);
+        update(lq,rq, v, 2*node+2, m+1,r);
+    }
+    void update(int lq, int rq, ll v) {
+        update(lq, rq, v, 0, 0, sz-1);
+    }
+    ll get(int i, int node, int l, int r) {
+        propagate(node, l,r);
+        if (l==r)
+            return values[node];
+        int m = (l+r)/2;
+        if (i<=m) {
+            return get(i, 2*node+1, l,m);
+        }
+        else
+            return get(i, 2*node+2, m+1,r);
+    }
+    ll get(int i) {
+        return get(i, 0, 0, sz-1);
     }
 };
