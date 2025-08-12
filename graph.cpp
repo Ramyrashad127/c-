@@ -54,6 +54,7 @@ struct edge {
     int v;
     ll w;
 };
+
 bool bellman(int n, int m, vi<edge> &edges, int src) {
     vi<ll>d(n+5, -1e8);
     d[src] = 1.0;
